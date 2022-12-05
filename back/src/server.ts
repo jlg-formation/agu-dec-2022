@@ -1,6 +1,7 @@
 import express from "express";
 import serveIndex from "serve-index";
 import { api } from "./api";
+
 const app = express();
 const port = 3000;
 const wwwDir: string = ".";

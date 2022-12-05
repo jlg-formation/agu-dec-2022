@@ -1,9 +1,11 @@
-import express from "express";
+import express, { Request, Response } from "express";
 
 const app = express.Router();
 
-app.get("/date", (req, res) => {
+const dateMiddleware = (req: Request, res: Response) => {
   res.json({ date: new Date() });
-});
+};
+
+app.get("/date", dateMiddleware);
 
 export const api = app;
