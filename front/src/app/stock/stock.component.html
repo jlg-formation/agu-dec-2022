@@ -15,25 +15,10 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td class="name">Tournevis</td>
-          <td class="price">3.10 €</td>
-          <td class="qty">58</td>
-        </tr>
-        <tr>
-          <td class="name">Pelle</td>
-          <td class="price">7.00 €</td>
-          <td class="qty">58</td>
-        </tr>
-        <tr>
-          <td class="name">Rateau</td>
-          <td class="price">2.50 €</td>
-          <td class="qty">100</td>
-        </tr>
-        <tr>
-          <td class="name">Tondeuse à gazon</td>
-          <td class="price">130.00 €</td>
-          <td class="qty">6</td>
+        <tr *ngFor="let article of articles">
+          <td class="name">{{ article.name }}</td>
+          <td class="price">{{ article.price }} €</td>
+          <td class="qty">{{ article.qty }}</td>
         </tr>
       </tbody>
     </table>
