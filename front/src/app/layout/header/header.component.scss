@@ -23,4 +23,8 @@ a {
     font-size: 1.3em;
     font-weight: bold;
   }
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
