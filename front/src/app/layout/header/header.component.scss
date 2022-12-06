@@ -5,4 +5,22 @@ img {
 header {
   background-color: #eee;
   height: 3em;
+  padding: 0 0.5em;
+
+  display: flex;
+  align-items: center;
+}
+
+a {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+
+  text-decoration: inherit;
+  color: inherit;
+
+  span {
+    font-size: 1.3em;
+    font-weight: bold;
+  }
 }
