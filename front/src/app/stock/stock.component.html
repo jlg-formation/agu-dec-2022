@@ -1,4 +1,4 @@
-<main>
+<main (click)="clearSelectedArticles()">
   <h1>Liste des articles</h1>
   <div class="content">
     <nav>
@@ -15,7 +15,11 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let article of articleService.articles">
+        <tr
+          *ngFor="let article of articleService.articles"
+          (click)="select($event, article)"
+          [class.selected]="selectedArticles.has(article)"
+        >
           <td class="name">{{ article.name }}</td>
           <td class="price">{{ article.price }} €</td>
           <td class="qty">{{ article.qty }}</td>

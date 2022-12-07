@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Article } from '../interfaces/article';
 import { ArticleService } from '../services/article.service';
 
 @Component({
@@ -7,9 +8,27 @@ import { ArticleService } from '../services/article.service';
   styleUrls: ['./stock.component.scss'],
 })
 export class StockComponent {
+  selectedArticles = new Set<Article>();
+
   constructor(protected articleService: ArticleService) {}
+
+  clearSelectedArticles() {
+    console.log('clearSelectedArticles');
+    this.selectedArticles.clear();
+  }
 
   async refresh() {
     await this.articleService.refresh();
+  }
+
+  select(event: MouseEvent, a: Article) {
+    event.stopPropagation();
+    console.log('event: ', event);
+    console.log('select', a);
+    if (this.selectedArticles.has(a)) {
+      this.selectedArticles.delete(a);
+      return;
+    }
+    this.selectedArticles.add(a);
   }
 }
