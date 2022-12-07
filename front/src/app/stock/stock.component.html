@@ -2,7 +2,7 @@
   <h1>Liste des articles</h1>
   <div class="content">
     <nav>
-      <button (click)="refresh()">Rafraîchir</button>
+      <button (click)="refresh()"><fa-icon [icon]="faCoffee"></fa-icon></button>
       <a class="button" routerLink="add">Ajouter</a>
       <button
         [hidden]="selectedArticles.size === 0"
