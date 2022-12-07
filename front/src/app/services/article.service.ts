@@ -20,10 +20,7 @@ export class ArticleService {
   load(): Article[] {
     const str = localStorage.getItem('articles');
     if (str === null) {
-      return [
-        { id: 'a1', name: 'Tournevis', price: 2.99, qty: 123 },
-        { id: 'a2', name: 'Pelle', price: 3, qty: 45 },
-      ];
+      return [];
     }
     return JSON.parse(str);
   }
