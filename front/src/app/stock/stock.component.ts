@@ -26,6 +26,11 @@ export class StockComponent {
     await this.articleService.refresh();
   }
 
+  async remove() {
+    await this.articleService.remove(this.selectedArticles);
+    this.selectedArticles.clear();
+  }
+
   select(event: MouseEvent, a: Article) {
     event.stopPropagation();
     console.log('event: ', event);
