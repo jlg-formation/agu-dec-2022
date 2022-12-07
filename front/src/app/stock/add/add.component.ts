@@ -15,4 +15,8 @@ export class AddComponent {
     price: new FormControl(0, Validators.required),
     qty: new FormControl(1, Validators.required),
   });
+
+  submit() {
+    console.log('submit');
+  }
 }
