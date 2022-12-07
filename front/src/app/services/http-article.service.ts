@@ -13,7 +13,7 @@ export class HttpArticleService extends ArticleService {
   }
 
   override async refresh(): Promise<void> {
-    this.http.get('http://localhost:3000/api/articles');
+    this.http.get('http://localhost:3000/api/articles').subscribe();
     console.log('refreshed');
   }
 }
