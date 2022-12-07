@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { Article } from '../interfaces/article';
 import { ArticleService } from '../services/article.service';
 
@@ -15,6 +15,11 @@ export class StockComponent {
   clearSelectedArticles() {
     console.log('clearSelectedArticles');
     this.selectedArticles.clear();
+  }
+
+  @HostListener('click', ['$event.target'])
+  onClick(event: MouseEvent) {
+    this.clearSelectedArticles();
   }
 
   async refresh() {
