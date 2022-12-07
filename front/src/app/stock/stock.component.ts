@@ -1,5 +1,9 @@
 import { Component, HostListener } from '@angular/core';
-import { faCoffee } from '@fortawesome/free-solid-svg-icons';
+import {
+  faPlus,
+  faRotateRight,
+  faTrashCan,
+} from '@fortawesome/free-solid-svg-icons';
 import { Article } from '../interfaces/article';
 import { ArticleService } from '../services/article.service';
 
@@ -9,7 +13,9 @@ import { ArticleService } from '../services/article.service';
   styleUrls: ['./stock.component.scss'],
 })
 export class StockComponent {
-  faCoffee = faCoffee;
+  faPlus = faPlus;
+  faRotateRight = faRotateRight;
+  faTrashCan = faTrashCan;
   selectedArticles = new Set<Article>();
 
   constructor(protected articleService: ArticleService) {}

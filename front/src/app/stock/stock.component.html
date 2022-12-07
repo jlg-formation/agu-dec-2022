@@ -2,13 +2,18 @@
   <h1>Liste des articles</h1>
   <div class="content">
     <nav>
-      <button (click)="refresh()"><fa-icon [icon]="faCoffee"></fa-icon></button>
-      <a class="button" routerLink="add">Ajouter</a>
+      <button (click)="refresh()" title="Rafraîchir">
+        <fa-icon [icon]="faRotateRight"></fa-icon>
+      </button>
+      <a class="button" routerLink="add" title="Ajouter"
+        ><fa-icon [icon]="faPlus"></fa-icon
+      ></a>
       <button
         [hidden]="selectedArticles.size === 0"
         (click)="$event.stopPropagation(); remove()"
+        title="Supprimer"
       >
-        Supprimer
+        <fa-icon [icon]="faTrashCan"></fa-icon>
       </button>
     </nav>
     <table>
