@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NewArticle } from 'src/app/interfaces/article';
+import { ArticleService } from 'src/app/services/article.service';
 
 @Component({
   selector: 'app-add',
@@ -16,7 +19,16 @@ export class AddComponent {
     qty: new FormControl(1, Validators.required),
   });
 
-  submit() {
+  constructor(
+    private articleService: ArticleService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
+
+  async submit() {
     console.log('submit');
+    const newArticle = this.f.value as NewArticle;
+    await this.articleService.add(newArticle);
+    await this.router.navigate(['..'], { relativeTo: this.route });
   }
 }
