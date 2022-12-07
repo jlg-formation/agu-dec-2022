@@ -29,6 +29,7 @@ export class AddComponent {
     console.log('submit');
     const newArticle = this.f.value as NewArticle;
     await this.articleService.add(newArticle);
+    await this.articleService.refresh();
     await this.router.navigate(['..'], { relativeTo: this.route });
   }
 }

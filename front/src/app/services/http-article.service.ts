@@ -1,7 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Article } from '../interfaces/article';
+import { delay, lastValueFrom } from 'rxjs';
+import { Article, NewArticle } from '../interfaces/article';
 import { ArticleService } from './article.service';
+
+const url = 'http://localhost:3000/api/articles';
 
 @Injectable({
   providedIn: 'root',
@@ -14,19 +17,32 @@ export class HttpArticleService extends ArticleService {
   }
 
   override async refresh(): Promise<void> {
-    this.http.get<Article[]>('http://localhost:3000/api/articles').subscribe({
-      next: (articles) => {
-        console.log('articles: ', articles);
-        this.articles = articles;
-        this.save();
-      },
-      error: (err) => {
-        console.log('err: ', err);
-      },
-      complete: () => {
-        console.log('complete');
-      },
-    });
-    console.log('refreshed');
+    try {
+      const articles = await lastValueFrom(
+        this.http.get<Article[]>(url).pipe(delay(0))
+      );
+      console.log('articles: ', articles);
+      this.articles = articles;
+      this.save();
+    } catch (err) {
+      console.log('err: ', err);
+    }
+  }
+
+  override async add(newArticle: NewArticle): Promise<void> {
+    await lastValueFrom(
+      this.http.post<Article[]>(url, newArticle).pipe(delay(0))
+    );
+  }
+
+  override async remove(selectedArticles: Set<Article>): Promise<void> {
+    const ids = [...selectedArticles].map((a) => a.id);
+    await lastValueFrom(
+      this.http
+        .delete<Article[]>(url, {
+          body: ids,
+        })
+        .pipe(delay(0))
+    );
   }
 }

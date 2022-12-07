@@ -37,6 +37,7 @@ export class StockComponent {
   async remove() {
     await this.articleService.remove(this.selectedArticles);
     this.selectedArticles.clear();
+    await this.articleService.refresh();
   }
 
   select(event: MouseEvent, a: Article) {
