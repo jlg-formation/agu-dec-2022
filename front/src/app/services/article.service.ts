@@ -11,6 +11,12 @@ export class ArticleService {
     console.log('instantiate article service');
   }
 
+  async add(newArticle: NewArticle) {
+    const article = { ...newArticle, id: generateId() };
+    this.articles.push(article);
+    this.save();
+  }
+
   load(): Article[] {
     const str = localStorage.getItem('articles');
     if (str === null) {
@@ -22,10 +28,8 @@ export class ArticleService {
     return JSON.parse(str);
   }
 
-  async add(newArticle: NewArticle) {
-    const article = { ...newArticle, id: generateId() };
-    this.articles.push(article);
-    this.save();
+  async refresh() {
+    this.articles = this.load();
   }
 
   save() {

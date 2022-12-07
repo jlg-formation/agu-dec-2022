@@ -8,4 +8,8 @@ import { ArticleService } from '../services/article.service';
 })
 export class StockComponent {
   constructor(protected articleService: ArticleService) {}
+
+  async refresh() {
+    await this.articleService.refresh();
+  }
 }
