@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Article } from '../interfaces/article';
+import { ArticleService } from '../services/article.service';
 
 @Component({
   selector: 'app-stock',
@@ -7,8 +7,5 @@ import { Article } from '../interfaces/article';
   styleUrls: ['./stock.component.scss'],
 })
 export class StockComponent {
-  articles: Article[] = [
-    { name: 'Tournevis', price: 2.99, qty: 123 },
-    { name: 'Pelle', price: 3, qty: 45 },
-  ];
+  constructor(protected articleService: ArticleService) {}
 }
