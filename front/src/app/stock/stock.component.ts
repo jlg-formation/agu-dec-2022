@@ -40,7 +40,7 @@ export class StockComponent {
   }
 
   @HostListener('click', ['$event.target'])
-  onClick(event: MouseEvent) {
+  onClick() {
     this.clearSelectedArticles();
   }
 
