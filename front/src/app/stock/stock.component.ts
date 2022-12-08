@@ -1,5 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import {
+  faCircleNotch,
   faPlus,
   faRotateRight,
   faTrashCan,
@@ -13,11 +14,20 @@ import { ArticleService } from '../services/article.service';
   styleUrls: ['./stock.component.scss'],
 })
 export class StockComponent {
-  isRefreshing = false;
   faPlus = faPlus;
   faRotateRight = faRotateRight;
   faTrashCan = faTrashCan;
+  faCircleNotch = faCircleNotch;
+  isRefreshing = false;
+  isRemoving = false;
   selectedArticles = new Set<Article>();
+
+  constructor(protected articleService: ArticleService) {}
+
+  clearSelectedArticles() {
+    console.log('clearSelectedArticles');
+    this.selectedArticles.clear();
+  }
 
   @HostListener('document:keypress', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
@@ -27,13 +37,6 @@ export class StockComponent {
         await this.refresh();
       })();
     }
-  }
-
-  constructor(protected articleService: ArticleService) {}
-
-  clearSelectedArticles() {
-    console.log('clearSelectedArticles');
-    this.selectedArticles.clear();
   }
 
   @HostListener('click', ['$event.target'])
@@ -53,9 +56,16 @@ export class StockComponent {
   }
 
   async remove() {
-    await this.articleService.remove(this.selectedArticles);
-    this.selectedArticles.clear();
-    await this.articleService.refresh();
+    try {
+      this.isRemoving = true;
+      await this.articleService.remove(this.selectedArticles);
+      await this.articleService.refresh();
+      this.selectedArticles.clear();
+    } catch (err) {
+      console.log('err: ', err);
+    } finally {
+      this.isRemoving = false;
+    }
   }
 
   select(event: MouseEvent, a: Article) {

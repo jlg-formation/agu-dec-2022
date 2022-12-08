@@ -12,8 +12,12 @@
         [hidden]="selectedArticles.size === 0"
         (click)="$event.stopPropagation(); remove()"
         title="Supprimer"
+        [disabled]="isRemoving"
       >
-        <fa-icon [icon]="faTrashCan"></fa-icon>
+        <fa-icon
+          [icon]="isRemoving ? faCircleNotch : faTrashCan"
+          [spin]="isRemoving"
+        ></fa-icon>
       </button>
     </nav>
     <table>

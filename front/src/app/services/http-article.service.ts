@@ -42,7 +42,7 @@ export class HttpArticleService extends ArticleService {
         .delete<Article[]>(url, {
           body: ids,
         })
-        .pipe(delay(0))
+        .pipe(delay(2000))
     );
   }
 }
