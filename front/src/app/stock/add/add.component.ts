@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -11,6 +12,7 @@ import { ArticleService } from 'src/app/services/article.service';
   styleUrls: ['./add.component.scss'],
 })
 export class AddComponent {
+  errorMsg = '';
   isAdding = false;
   faCircleNotch = faCircleNotch;
   faPlus = faPlus;
@@ -32,6 +34,7 @@ export class AddComponent {
   async submit() {
     try {
       console.log('submit');
+      this.errorMsg = '';
       this.isAdding = true;
       const newArticle = this.f.value as NewArticle;
       await this.articleService.add(newArticle);
@@ -39,6 +42,9 @@ export class AddComponent {
       await this.router.navigate(['..'], { relativeTo: this.route });
     } catch (err) {
       console.log('err: ', err);
+      if (err instanceof HttpErrorResponse) {
+        this.errorMsg = err.error;
+      }
     } finally {
       this.isAdding = false;
     }

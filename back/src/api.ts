@@ -27,7 +27,7 @@ app.use(express.json());
 app.post("/articles", (req, res) => {
   const newArticle: NewArticle = req.body;
   if (newArticle.price === 1) {
-    res.status(400).end("do not put price to 1");
+    res.status(400).end("Please do not put price to 1");
     return;
   }
   const id = generateId();
