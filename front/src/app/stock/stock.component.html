@@ -34,8 +34,10 @@
           (click)="select($event, article)"
           [class.selected]="selectedArticles.has(article)"
         >
-          <td class="name">{{ article.name }}</td>
-          <td class="price">{{ article.price }} €</td>
+          <td class="name">{{ article.name | ellipsis : 7 }}</td>
+          <td class="price">
+            {{ article.price | currency }}
+          </td>
           <td class="qty">{{ article.qty }}</td>
         </tr>
       </tbody>

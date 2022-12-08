@@ -38,5 +38,10 @@ table {
     tr.selected {
       background-color: #ccc;
     }
+
+    .price,
+    .qty {
+      text-align: right;
+    }
   }
 }
