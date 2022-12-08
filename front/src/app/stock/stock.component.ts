@@ -24,7 +24,7 @@ export class StockComponent {
     console.log('event.key: ', event.key);
     if (event.key === 'r') {
       (async () => {
-        this.refresh();
+        await this.refresh();
       })();
     }
   }
