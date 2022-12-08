@@ -39,7 +39,7 @@
           (click)="select($event, article)"
           [class.selected]="selectedArticles.has(article)"
         >
-          <td class="name">{{ article.name | ellipsis : 7 }}</td>
+          <td class="name">{{ article.name | ellipsis : 30 }}</td>
           <td class="price">
             {{ article.price | currency }}
           </td>
