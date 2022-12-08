@@ -13,9 +13,6 @@ import { ArticleService } from 'src/app/services/article.service';
 })
 export class AddComponent {
   errorMsg = '';
-  isAdding = false;
-  faCircleNotch = faCircleNotch;
-  faPlus = faPlus;
   f = new FormGroup({
     name: new FormControl('Truc', [
       Validators.required,
@@ -24,12 +21,19 @@ export class AddComponent {
     price: new FormControl(0, Validators.required),
     qty: new FormControl(1, Validators.required),
   });
+  faCircleNotch = faCircleNotch;
+  faPlus = faPlus;
+  isAdding = false;
 
   constructor(
     private articleService: ArticleService,
     private router: Router,
     private route: ActivatedRoute
   ) {}
+
+  doSomething(event: unknown) {
+    console.log('event: ', event);
+  }
 
   async submit() {
     try {
