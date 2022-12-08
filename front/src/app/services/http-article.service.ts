@@ -31,7 +31,7 @@ export class HttpArticleService extends ArticleService {
 
   override async add(newArticle: NewArticle): Promise<void> {
     await lastValueFrom(
-      this.http.post<Article[]>(url, newArticle).pipe(delay(2000))
+      this.http.post<Article[]>(url, newArticle).pipe(delay(300))
     );
   }
 
