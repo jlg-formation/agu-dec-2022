@@ -19,7 +19,7 @@ export class HttpArticleService extends ArticleService {
   override async refresh(): Promise<void> {
     try {
       const articles = await lastValueFrom(
-        this.http.get<Article[]>(url).pipe(delay(0))
+        this.http.get<Article[]>(url).pipe(delay(2000))
       );
       console.log('articles: ', articles);
       this.articles = articles;

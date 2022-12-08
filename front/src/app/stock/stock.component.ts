@@ -13,10 +13,21 @@ import { ArticleService } from '../services/article.service';
   styleUrls: ['./stock.component.scss'],
 })
 export class StockComponent {
+  isRefreshing = false;
   faPlus = faPlus;
   faRotateRight = faRotateRight;
   faTrashCan = faTrashCan;
   selectedArticles = new Set<Article>();
+
+  @HostListener('document:keypress', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    console.log('event.key: ', event.key);
+    if (event.key === 'r') {
+      (async () => {
+        this.refresh();
+      })();
+    }
+  }
 
   constructor(protected articleService: ArticleService) {}
 
@@ -31,7 +42,14 @@ export class StockComponent {
   }
 
   async refresh() {
-    await this.articleService.refresh();
+    try {
+      this.isRefreshing = true;
+      await this.articleService.refresh();
+    } catch (err) {
+      console.log('err: ', err);
+    } finally {
+      this.isRefreshing = false;
+    }
   }
 
   async remove() {
