@@ -5,9 +5,9 @@
       <button (click)="refresh()" title="Rafraîchir">
         <fa-icon [icon]="faRotateRight"></fa-icon>
       </button>
-      <a class="button" routerLink="add" title="Ajouter"
-        ><fa-icon [icon]="faPlus"></fa-icon
-      ></a>
+      <a class="button" routerLink="add" title="Ajouter">
+        <fa-icon [icon]="faPlus"></fa-icon>
+      </a>
       <button
         [hidden]="selectedArticles.size === 0"
         (click)="$event.stopPropagation(); remove()"
