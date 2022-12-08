@@ -2,7 +2,12 @@
   <h1>Liste des articles</h1>
   <div class="content">
     <nav>
-      <button (click)="refresh()" title="Rafraîchir" [disabled]="isRefreshing">
+      <button
+        (click)="refresh()"
+        i18n-title
+        title="Rafraîchir"
+        [disabled]="isRefreshing"
+      >
         <fa-icon [icon]="faRotateRight" [spin]="isRefreshing"></fa-icon>
       </button>
       <a class="button" routerLink="add" title="Ajouter">
@@ -23,7 +28,7 @@
     <table>
       <thead>
         <tr>
-          <th class="name">Nom</th>
+          <th i18n class="name">Nom</th>
           <th class="price">Prix</th>
           <th class="qty">Quantité</th>
         </tr>
