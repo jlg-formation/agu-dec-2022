@@ -1,5 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Article, NewArticle } from '../interfaces/article';
+import {
+  Observable,
+  catchError,
+  delay,
+  finalize,
+  of,
+  switchMap,
+  tap,
+} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -9,6 +18,39 @@ export class ArticleService {
 
   constructor() {
     console.log('instantiate article service');
+  }
+
+  add2(newArticle: NewArticle): Observable<void> {
+    return of(undefined).pipe(
+    //   tap(() => {
+    //     console.log('hello');
+    //   }),
+    //   delay(300),
+    //   tap(() => {
+    //     console.log('coucou');
+    //   }),
+    //   switchMap(() => {
+    //     return this.http.get(url);
+    //   }),
+    //   switchMap((xxx) => {
+    //     return this.http.get(url);
+    //   }),
+    //   switchMap((yyy) => {
+    //     return this.http.get(url);
+    //   }),
+    //   switchMap(() => {
+    //     return this.http.get(url);
+    //   }),
+    //   tap(() => {
+    //     console.log('coucou');
+    //   }),
+
+    //   catchError((err) => {
+    //     console.log('err: ', err);
+    //     return of(undefined);
+    //   }),
+    //   finalize(() => {})
+    // );
   }
 
   async add(newArticle: NewArticle) {
