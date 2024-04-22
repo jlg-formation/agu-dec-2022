@@ -1,0 +1,30 @@
+@import "../../../scss/variables.scss";
+
+form {
+  display: flex;
+  flex-flow: column;
+  gap: 0.5em;
+
+  width: 100%;
+  max-width: 25em;
+  margin: 0 auto;
+
+  label {
+    display: flex;
+    flex-flow: column;
+
+    input {
+      padding: 0.5em 1em;
+      border: 0.1em solid #aaa;
+      border-radius: $default-border-radius;
+    }
+  }
+
+  div.error {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    font-weight: bold;
+    height: 3em;
+  }
+}
