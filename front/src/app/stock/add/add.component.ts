@@ -1,23 +1,13 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faCircleNotch, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { NewArticle } from '../../interfaces/article';
 import { ArticleService } from '../../services/article.service';
-import { CommonModule } from '@angular/common';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { WidgetModule } from '../../widget/widget.module';
 
 @Component({
   selector: 'app-add',
-  standalone: true,
-  imports: [CommonModule, FontAwesomeModule, WidgetModule, ReactiveFormsModule],
   templateUrl: './add.component.html',
   styleUrls: ['./add.component.scss'],
 })
