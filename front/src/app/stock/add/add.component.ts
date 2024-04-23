@@ -5,6 +5,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { faCircleNotch, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { NewArticle } from '../../interfaces/article';
 import { ArticleService } from '../../services/article.service';
+import {
+  Observable,
+  catchError,
+  finalize,
+  map,
+  of,
+  switchMap,
+  tap,
+} from 'rxjs';
 
 @Component({
   selector: 'app-add',
@@ -35,22 +44,36 @@ export class AddComponent {
     console.log('event: ', event);
   }
 
-  async submit() {
-    try {
-      console.log('submit');
-      this.errorMsg = '';
-      this.isAdding = true;
-      const newArticle = this.f.value as NewArticle;
-      await this.articleService.add(newArticle);
-      await this.articleService.refresh();
-      await this.router.navigate(['..'], { relativeTo: this.route });
-    } catch (err) {
-      console.log('err: ', err);
-      if (err instanceof HttpErrorResponse) {
-        this.errorMsg = err.error;
-      }
-    } finally {
-      this.isAdding = false;
-    }
+  submit() {
+    return of(undefined)
+      .pipe(
+        tap(() => {
+          console.log('submit');
+          this.errorMsg = '';
+          this.isAdding = true;
+        }),
+        switchMap(() => {
+          const newArticle = this.f.value as NewArticle;
+          return this.articleService.add2(newArticle);
+        }),
+        switchMap(() => this.articleService.refresh()),
+        switchMap(() =>
+          this.router.navigate(['..'], { relativeTo: this.route })
+        ),
+        catchError((err) => {
+          console.log('err: ', err);
+          if (err instanceof HttpErrorResponse) {
+            this.errorMsg = err.error;
+          }
+          return of(undefined);
+        }),
+        finalize(() => {
+          this.isAdding = false;
+        }),
+        map((x) => {
+          return undefined;
+        })
+      )
+      .subscribe();
   }
 }
