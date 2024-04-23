@@ -1,6 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, delay, lastValueFrom, of, switchMap, tap } from 'rxjs';
+import {
+  Observable,
+  catchError,
+  delay,
+  lastValueFrom,
+  map,
+  of,
+  switchMap,
+  tap,
+} from 'rxjs';
 import { Article, NewArticle } from '../interfaces/article';
 import { ArticleService } from './article.service';
 
@@ -27,6 +36,22 @@ export class HttpArticleService extends ArticleService {
     } catch (err) {
       console.log('err: ', err);
     }
+  }
+
+  override refresh2(): Observable<void> {
+    return of(undefined).pipe(
+      switchMap(() => this.http.get<Article[]>(url)),
+      delay(300),
+      map((articles) => {
+        console.log('articles: ', articles);
+        this.articles = articles;
+        this.save();
+      }),
+      catchError((err) => {
+        console.log('err: ', err);
+        return of(undefined);
+      })
+    );
   }
 
   override add2(newArticle: NewArticle): Observable<void> {

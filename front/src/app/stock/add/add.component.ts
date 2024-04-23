@@ -56,7 +56,7 @@ export class AddComponent {
           const newArticle = this.f.value as NewArticle;
           return this.articleService.add2(newArticle);
         }),
-        switchMap(() => this.articleService.refresh()),
+        switchMap(() => this.articleService.refresh2()),
         switchMap(() =>
           this.router.navigate(['..'], { relativeTo: this.route })
         ),

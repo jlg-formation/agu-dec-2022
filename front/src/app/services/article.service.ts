@@ -44,8 +44,16 @@ export class ArticleService {
     return JSON.parse(str);
   }
 
-  async refresh() {
+  async refresh(): Promise<void> {
     this.articles = this.load();
+  }
+
+  refresh2(): Observable<void> {
+    return of(undefined).pipe(
+      tap(() => {
+        this.articles = this.load();
+      })
+    );
   }
 
   async remove(selectedArticles: Set<Article>) {
