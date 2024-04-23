@@ -8,28 +8,16 @@
         [action]="refresh()"
       >
       </app-async-btn>
-      <button
-        (click)="refresh().subscribe()"
-        i18n-title
-        title="Rafraîchir"
-        [disabled]="isRefreshing"
-      >
-        <fa-icon [icon]="faRotateRight" [spin]="isRefreshing"></fa-icon>
-      </button>
       <a class="button" routerLink="add" title="Ajouter">
         <fa-icon [icon]="faPlus"></fa-icon>
       </a>
-      <button
+      <app-async-btn
+        label="Supprimer"
+        [icon]="faTrashCan"
+        [action]="remove()"
         [hidden]="selectedArticles.size === 0"
-        (click)="$event.stopPropagation(); remove()"
-        title="Supprimer"
-        [disabled]="isRemoving"
       >
-        <fa-icon
-          [icon]="isRemoving ? faCircleNotch : faTrashCan"
-          [spin]="isRemoving"
-        ></fa-icon>
-      </button>
+      </app-async-btn>
     </nav>
     <table>
       <thead>

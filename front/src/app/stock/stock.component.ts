@@ -32,8 +32,6 @@ export class StockComponent {
   faRotateRight = faRotateRight;
   faTrashCan = faTrashCan;
   faCircleNotch = faCircleNotch;
-  isRefreshing = false;
-  isRemoving = false;
   selectedArticles = new Set<Article>();
 
   constructor(protected articleService: ArticleService) {}
@@ -58,46 +56,35 @@ export class StockComponent {
 
   refresh(): Observable<void> {
     return of(undefined).pipe(
-      switchMap(() => {
-        this.isRefreshing = true;
-        return this.articleService.refresh();
-      }),
+      switchMap(() => this.articleService.refresh()),
       catchError((err) => {
         console.log('err: ', err);
         return of(undefined);
-      }),
-      finalize(() => {
-        this.isRefreshing = false;
       })
     );
   }
 
   remove() {
-    return of(undefined)
-      .pipe(
-        switchMap(() => {
-          const answer = window.confirm("t'es sur ?");
-          console.log('answer: ', answer);
-          if (answer === false) {
-            this.selectedArticles.clear();
-            return EMPTY;
-          }
-          this.isRemoving = true;
-          return this.articleService.remove(this.selectedArticles);
-        }),
-        switchMap(() => this.articleService.refresh()),
-        tap(() => {
+    return of(undefined).pipe(
+      switchMap(() => {
+        const answer = window.confirm("t'es sur ?");
+        console.log('answer: ', answer);
+        if (answer === false) {
           this.selectedArticles.clear();
-        }),
-        catchError((err) => {
-          console.log('err: ', err);
-          return of(undefined);
-        }),
-        finalize(() => {
-          this.isRemoving = false;
-        })
-      )
-      .subscribe();
+          return EMPTY;
+        }
+
+        return this.articleService.remove(this.selectedArticles);
+      }),
+      switchMap(() => this.articleService.refresh()),
+      tap(() => {
+        this.selectedArticles.clear();
+      }),
+      catchError((err) => {
+        console.log('err: ', err);
+        return of(undefined);
+      })
+    );
   }
 
   select(event: MouseEvent, a: Article) {
