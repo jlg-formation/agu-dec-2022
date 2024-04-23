@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { delay, lastValueFrom } from 'rxjs';
+import { Observable, delay, lastValueFrom, of, switchMap, tap } from 'rxjs';
 import { Article, NewArticle } from '../interfaces/article';
 import { ArticleService } from './article.service';
 
@@ -27,6 +27,13 @@ export class HttpArticleService extends ArticleService {
     } catch (err) {
       console.log('err: ', err);
     }
+  }
+
+  override add2(newArticle: NewArticle): Observable<void> {
+    return of(undefined).pipe(
+      switchMap(() => this.http.post<void>(url, newArticle)),
+      delay(300)
+    );
   }
 
   override async add(newArticle: NewArticle): Promise<void> {

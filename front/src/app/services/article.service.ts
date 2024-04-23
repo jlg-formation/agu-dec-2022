@@ -22,38 +22,15 @@ export class ArticleService {
 
   add2(newArticle: NewArticle): Observable<void> {
     return of(undefined).pipe(
-    //   tap(() => {
-    //     console.log('hello');
-    //   }),
-    //   delay(300),
-    //   tap(() => {
-    //     console.log('coucou');
-    //   }),
-    //   switchMap(() => {
-    //     return this.http.get(url);
-    //   }),
-    //   switchMap((xxx) => {
-    //     return this.http.get(url);
-    //   }),
-    //   switchMap((yyy) => {
-    //     return this.http.get(url);
-    //   }),
-    //   switchMap(() => {
-    //     return this.http.get(url);
-    //   }),
-    //   tap(() => {
-    //     console.log('coucou');
-    //   }),
-
-    //   catchError((err) => {
-    //     console.log('err: ', err);
-    //     return of(undefined);
-    //   }),
-    //   finalize(() => {})
-    // );
+      tap(() => {
+        const article = { ...newArticle, id: generateId() };
+        this.articles.push(article);
+        this.save();
+      })
+    );
   }
 
-  async add(newArticle: NewArticle) {
+  async add(newArticle: NewArticle): Promise<void> {
     const article = { ...newArticle, id: generateId() };
     this.articles.push(article);
     this.save();
