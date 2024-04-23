@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { array, max, total } from '../../signaux';
 import { webSocket } from 'rxjs/webSocket';
 import { tap } from 'rxjs';
@@ -21,17 +22,17 @@ export class LegalComponent implements OnInit {
   webSocket = webSocket(url);
   constructor() {
     console.log('this.array: ', this.array);
-  }
-
-  ngOnInit(): void {
     this.webSocket
       .pipe(
+        takeUntilDestroyed(),
         tap((data) => {
           console.log('data: ', data);
         })
       )
       .subscribe();
   }
+
+  ngOnInit(): void {}
 
   addRandom() {
     const array = this.array();

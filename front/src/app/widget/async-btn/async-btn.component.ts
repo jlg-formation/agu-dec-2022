@@ -4,7 +4,9 @@ import {
   EventEmitter,
   Input,
   Output,
+  inject,
 } from '@angular/core';
+import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { Observable, catchError, finalize, of, switchMap, tap } from 'rxjs';
