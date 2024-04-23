@@ -1,16 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
-  Observable,
-  catchError,
-  delay,
-  lastValueFrom,
-  map,
-  of,
-  switchMap,
-  tap,
-  throwError,
-} from 'rxjs';
+import { Observable, catchError, delay, map, of, switchMap } from 'rxjs';
 import { Article, NewArticle } from '../interfaces/article';
 import { ArticleService } from './article.service';
 
@@ -32,7 +22,7 @@ export class HttpArticleService extends ArticleService {
       delay(300),
       map((articles) => {
         console.log('articles: ', articles);
-        this.articles = articles;
+        this.articles$.next(articles);
         this.save();
       }),
       catchError((err) => {

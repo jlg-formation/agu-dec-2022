@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, tap } from 'rxjs';
+import { BehaviorSubject, Observable, of, tap } from 'rxjs';
 import { Article, NewArticle } from '../interfaces/article';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ArticleService {
-  articles: Article[] = this.load();
+  articles$ = new BehaviorSubject<Article[]>(this.load());
 
   constructor() {
     console.log('instantiate article service');
@@ -16,7 +16,8 @@ export class ArticleService {
     return of(undefined).pipe(
       tap(() => {
         const article = { ...newArticle, id: generateId() };
-        this.articles.push(article);
+        this.articles$.value.push(article);
+        this.articles$.next(this.articles$.value);
         this.save();
       })
     );
@@ -33,7 +34,7 @@ export class ArticleService {
   refresh(): Observable<void> {
     return of(undefined).pipe(
       tap(() => {
-        this.articles = this.load();
+        this.articles$.next(this.load());
       })
     );
   }
@@ -41,14 +42,16 @@ export class ArticleService {
   remove(selectedArticles: Set<Article>): Observable<void> {
     return of(undefined).pipe(
       tap(() => {
-        this.articles = this.articles.filter((a) => !selectedArticles.has(a));
+        this.articles$.next(
+          this.articles$.value.filter((a) => !selectedArticles.has(a))
+        );
         this.save();
       })
     );
   }
 
   save() {
-    localStorage.setItem('articles', JSON.stringify(this.articles));
+    localStorage.setItem('articles', JSON.stringify(this.articles$.value));
   }
 }
 function generateId() {

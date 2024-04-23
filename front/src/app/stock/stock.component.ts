@@ -1,4 +1,8 @@
-import { Component, HostListener } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  HostListener,
+} from '@angular/core';
 import {
   faCircleNotch,
   faPlus,
@@ -13,6 +17,7 @@ import { ArticleService } from '../services/article.service';
   selector: 'app-stock',
   templateUrl: './stock.component.html',
   styleUrls: ['./stock.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StockComponent {
   faPlus = faPlus;
