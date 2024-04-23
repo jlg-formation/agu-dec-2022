@@ -59,4 +59,17 @@ export class HttpArticleService extends ArticleService {
         .pipe(delay(300))
     );
   }
+
+  override remove2(selectedArticles: Set<Article>): Observable<void> {
+    return of(undefined).pipe(
+      switchMap(() => {
+        const ids = [...selectedArticles].map((a) => a.id);
+        return this.http.delete<Article[]>(url, {
+          body: ids,
+        });
+      }),
+      delay(300),
+      map(() => {})
+    );
+  }
 }

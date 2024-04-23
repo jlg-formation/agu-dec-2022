@@ -5,9 +5,17 @@ import {
   faRotateRight,
   faTrashCan,
 } from '@fortawesome/free-solid-svg-icons';
+import {
+  EMPTY,
+  catchError,
+  finalize,
+  lastValueFrom,
+  of,
+  switchMap,
+  tap,
+} from 'rxjs';
 import { Article } from '../interfaces/article';
 import { ArticleService } from '../services/article.service';
-import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-stock',
@@ -67,6 +75,34 @@ export class StockComponent {
     } finally {
       this.isRemoving = false;
     }
+  }
+
+  remove2() {
+    return of(undefined)
+      .pipe(
+        switchMap(() => {
+          const answer = window.confirm("t'es sur ?");
+          console.log('answer: ', answer);
+          if (answer === false) {
+            this.selectedArticles.clear();
+            return EMPTY;
+          }
+          this.isRemoving = true;
+          return this.articleService.remove2(this.selectedArticles);
+        }),
+        switchMap(() => this.articleService.refresh2()),
+        tap(() => {
+          this.selectedArticles.clear();
+        }),
+        catchError((err) => {
+          console.log('err: ', err);
+          return of(undefined);
+        }),
+        finalize(() => {
+          this.isRemoving = false;
+        })
+      )
+      .subscribe();
   }
 
   select(event: MouseEvent, a: Article) {

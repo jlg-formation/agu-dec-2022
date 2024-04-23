@@ -51,6 +51,15 @@ export class ArticleService {
     this.save();
   }
 
+  remove2(selectedArticles: Set<Article>): Observable<void> {
+    return of(undefined).pipe(
+      tap(() => {
+        this.articles = this.articles.filter((a) => !selectedArticles.has(a));
+        this.save();
+      })
+    );
+  }
+
   save() {
     localStorage.setItem('articles', JSON.stringify(this.articles));
   }
