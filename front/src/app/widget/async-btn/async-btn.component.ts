@@ -1,5 +1,4 @@
 import {
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   EventEmitter,
@@ -7,19 +6,8 @@ import {
   Output,
 } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import {
-  IconDefinition,
-  faCircleNotch,
-} from '@fortawesome/free-solid-svg-icons';
-import {
-  Observable,
-  catchError,
-  delay,
-  finalize,
-  of,
-  switchMap,
-  tap,
-} from 'rxjs';
+import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+import { Observable, catchError, finalize, of, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-async-btn',
