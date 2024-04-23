@@ -1,5 +1,6 @@
 import { createServer } from "http";
-import { Server } from "socket.io";
+import { WebSocketServer } from "ws";
+
 import express from "express";
 import serveIndex from "serve-index";
 // import cors from "cors";
@@ -7,19 +8,6 @@ import { api } from "./api";
 
 const app = express();
 const server = createServer(app);
-const io = new Server(server);
-
-io.on("connection", (client) => {
-  client.on("event", (data) => {
-    console.log("data: ", data);
-    client.emit("yyy", "this is the content of yyy");
-  });
-
-  client.emit("xxx", "this is the content");
-  client.on("disconnect", () => {
-    console.log("disconnect");
-  });
-});
 
 const port = +(process.env.PORT || 3000);
 const wwwDir: string = "../front/dist/front";
@@ -42,4 +30,16 @@ app.get("/*", (req, res) => {
 
 server.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
+});
+
+const wss = new WebSocketServer({ port: 5555 });
+
+wss.on("connection", function connection(ws) {
+  ws.on("error", console.error);
+
+  ws.on("message", function message(data) {
+    console.log("received: %s", data);
+  });
+
+  ws.send(JSON.stringify({ toto: 123 }));
 });

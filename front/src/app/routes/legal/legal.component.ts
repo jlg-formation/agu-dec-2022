@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { array, max, total } from '../../signaux';
+import { webSocket } from 'rxjs/webSocket';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-legal',
@@ -8,12 +10,24 @@ import { array, max, total } from '../../signaux';
   templateUrl: './legal.component.html',
   styleUrls: ['./legal.component.scss'],
 })
-export class LegalComponent {
+export class LegalComponent implements OnInit {
   array = array;
   max = max;
   total = total;
+
+  webSocket = webSocket('ws://localhost:5555');
   constructor() {
     console.log('this.array: ', this.array);
+  }
+
+  ngOnInit(): void {
+    this.webSocket
+      .pipe(
+        tap((data) => {
+          console.log('data: ', data);
+        })
+      )
+      .subscribe();
   }
 
   addRandom() {
