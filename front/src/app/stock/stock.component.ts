@@ -7,6 +7,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import {
   EMPTY,
+  Observable,
   catchError,
   finalize,
   lastValueFrom,
@@ -42,9 +43,7 @@ export class StockComponent {
   handleKeyboardEvent(event: KeyboardEvent) {
     console.log('event.key: ', event.key);
     if (event.key === 'r') {
-      (async () => {
-        await this.refresh();
-      })();
+      this.refresh();
     }
   }
 
@@ -53,15 +52,22 @@ export class StockComponent {
     this.clearSelectedArticles();
   }
 
-  async refresh() {
-    try {
-      this.isRefreshing = true;
-      await lastValueFrom(this.articleService.refresh2());
-    } catch (err) {
-      console.log('err: ', err);
-    } finally {
-      this.isRefreshing = false;
-    }
+  refresh(): void {
+    of(undefined)
+      .pipe(
+        switchMap(() => {
+          this.isRefreshing = true;
+          return this.articleService.refresh2();
+        }),
+        catchError((err) => {
+          console.log('err: ', err);
+          return of(undefined);
+        }),
+        finalize(() => {
+          this.isRefreshing = false;
+        })
+      )
+      .subscribe();
   }
 
   async remove() {
