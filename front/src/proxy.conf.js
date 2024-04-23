@@ -1,4 +1,7 @@
 const winston = require("winston");
+const { WebSocket } = require("ws");
+
+const ws = new WebSocket("ws://localhost:3000/truc");
 
 function logProvider() {
   return winston.createLogger({
@@ -17,6 +20,11 @@ const proxyConfig = {
     secure: false,
     logLevel: "debug",
     logProvider: logProvider,
+  },
+  "/truc": {
+    target: "http://localhost:3000",
+    secure: false,
+    ws: true,
   },
 };
 

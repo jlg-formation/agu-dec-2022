@@ -3,6 +3,9 @@ import { array, max, total } from '../../signaux';
 import { webSocket } from 'rxjs/webSocket';
 import { tap } from 'rxjs';
 
+const url = `ws://${window.location.host}/truc`;
+console.log('url: ', url);
+
 @Component({
   selector: 'app-legal',
   standalone: true,
@@ -15,7 +18,7 @@ export class LegalComponent implements OnInit {
   max = max;
   total = total;
 
-  webSocket = webSocket('ws://localhost:3000');
+  webSocket = webSocket(url);
   constructor() {
     console.log('this.array: ', this.array);
   }
