@@ -28,11 +28,7 @@ app.get("/*", (req, res) => {
   res.sendFile("index.html", { root: wwwDir });
 });
 
-server.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
-
-const wss = new WebSocketServer({ port: 5555 });
+const wss = new WebSocketServer({ server });
 
 wss.on("connection", function connection(ws) {
   ws.on("error", console.error);
@@ -44,4 +40,8 @@ wss.on("connection", function connection(ws) {
   setInterval(() => {
     ws.send(JSON.stringify({ toto: 123 }));
   }, 1000);
+});
+
+server.listen(port, () => {
+  console.log(`Example app listening on port ${port}`);
 });

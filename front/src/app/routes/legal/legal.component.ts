@@ -15,7 +15,7 @@ export class LegalComponent implements OnInit {
   max = max;
   total = total;
 
-  webSocket = webSocket('ws://localhost:5555');
+  webSocket = webSocket('ws://localhost:3000');
   constructor() {
     console.log('this.array: ', this.array);
   }
