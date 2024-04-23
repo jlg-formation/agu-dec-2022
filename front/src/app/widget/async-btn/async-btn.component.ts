@@ -2,14 +2,24 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  EventEmitter,
   Input,
+  Output,
 } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
   IconDefinition,
   faCircleNotch,
 } from '@fortawesome/free-solid-svg-icons';
-import { Observable, delay, finalize, of, switchMap, tap } from 'rxjs';
+import {
+  Observable,
+  catchError,
+  delay,
+  finalize,
+  of,
+  switchMap,
+  tap,
+} from 'rxjs';
 
 @Component({
   selector: 'app-async-btn',
@@ -30,6 +40,12 @@ export class AsyncBtnComponent {
   @Input()
   icon = faCircleNotch;
 
+  @Output()
+  begin = new EventEmitter<void>();
+
+  @Output()
+  catch = new EventEmitter<string>();
+
   isInProgress = false;
 
   faCircleNotch = faCircleNotch;
@@ -40,10 +56,22 @@ export class AsyncBtnComponent {
         tap(() => {
           console.log('start doing');
           this.isInProgress = true;
+          this.begin.emit();
         }),
         switchMap(() => this.action),
         tap(() => {
           console.log('end doing');
+        }),
+        catchError((err) => {
+          console.log('async btn err: ', err);
+          if (err instanceof Error) {
+            this.catch.emit(err.message);
+          } else if (typeof err === 'string') {
+            this.catch.emit(err);
+          } else {
+            this.catch.emit('Erreur Technique');
+          }
+          return of(undefined);
         }),
         finalize(() => {
           console.log('finalize');

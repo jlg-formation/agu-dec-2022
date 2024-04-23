@@ -1,5 +1,6 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   HostListener,
 } from '@angular/core';
@@ -33,8 +34,12 @@ export class StockComponent {
   faTrashCan = faTrashCan;
   faCircleNotch = faCircleNotch;
   selectedArticles = new Set<Article>();
+  errorMsg = '';
 
-  constructor(protected articleService: ArticleService) {}
+  constructor(
+    protected articleService: ArticleService,
+    private changeDetector: ChangeDetectorRef
+  ) {}
 
   clearSelectedArticles() {
     console.log('clearSelectedArticles');
@@ -55,13 +60,7 @@ export class StockComponent {
   }
 
   refresh(): Observable<void> {
-    return of(undefined).pipe(
-      switchMap(() => this.articleService.refresh()),
-      catchError((err) => {
-        console.log('err: ', err);
-        return of(undefined);
-      })
-    );
+    return of(undefined).pipe(switchMap(() => this.articleService.refresh()));
   }
 
   remove() {
@@ -79,10 +78,6 @@ export class StockComponent {
       switchMap(() => this.articleService.refresh()),
       tap(() => {
         this.selectedArticles.clear();
-      }),
-      catchError((err) => {
-        console.log('err: ', err);
-        return of(undefined);
       })
     );
   }
@@ -96,5 +91,16 @@ export class StockComponent {
       return;
     }
     this.selectedArticles.add(a);
+  }
+
+  resetErrorMsg() {
+    this.errorMsg = '';
+    this.changeDetector.markForCheck();
+  }
+
+  setErrorMsg(str: string) {
+    console.log('setErrorMsg: ', str);
+    this.errorMsg = str;
+    this.changeDetector.markForCheck();
   }
 }

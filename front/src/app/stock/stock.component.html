@@ -6,6 +6,8 @@
         label="Rafraîchir"
         [icon]="faRotateRight"
         [action]="refresh()"
+        (begin)="resetErrorMsg()"
+        (catch)="setErrorMsg($event)"
       >
       </app-async-btn>
       <a class="button" routerLink="add" title="Ajouter">
@@ -16,9 +18,14 @@
         [icon]="faTrashCan"
         [action]="remove()"
         [hidden]="selectedArticles.size === 0"
+        (begin)="resetErrorMsg()"
+        (catch)="setErrorMsg($event)"
       >
       </app-async-btn>
     </nav>
+    <div class="error">
+      {{ errorMsg }}
+    </div>
     <table>
       <thead>
         <tr>

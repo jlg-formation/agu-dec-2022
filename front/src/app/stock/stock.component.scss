@@ -5,7 +5,13 @@
 div.content {
   display: flex;
   flex-flow: column;
-  gap: 2em;
+
+  div.error {
+    height: 2em;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+  }
 }
 
 nav {

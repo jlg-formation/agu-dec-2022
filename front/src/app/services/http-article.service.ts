@@ -1,6 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, delay, map, of, switchMap } from 'rxjs';
+import {
+  Observable,
+  catchError,
+  delay,
+  map,
+  of,
+  switchMap,
+  throwError,
+} from 'rxjs';
 import { Article, NewArticle } from '../interfaces/article';
 import { ArticleService } from './article.service';
 
@@ -27,7 +35,7 @@ export class HttpArticleService extends ArticleService {
       }),
       catchError((err) => {
         console.log('err: ', err);
-        return of(undefined);
+        return throwError(() => err);
       })
     );
   }
@@ -35,7 +43,11 @@ export class HttpArticleService extends ArticleService {
   override add(newArticle: NewArticle): Observable<void> {
     return of(undefined).pipe(
       switchMap(() => this.http.post<void>(url, newArticle)),
-      delay(300)
+      delay(300),
+      catchError((err) => {
+        console.log('err: ', err);
+        throw err;
+      })
     );
   }
 
