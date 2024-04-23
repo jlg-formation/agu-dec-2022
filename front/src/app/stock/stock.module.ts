@@ -7,6 +7,7 @@ import { AddComponent } from './add/add.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { WidgetModule } from '../widget/widget.module';
+import { AsyncBtnComponent } from '../widget/async-btn/async-btn.component';
 
 @NgModule({
   declarations: [StockComponent, AddComponent],
@@ -16,6 +17,7 @@ import { WidgetModule } from '../widget/widget.module';
     ReactiveFormsModule,
     FontAwesomeModule,
     WidgetModule,
+    AsyncBtnComponent,
   ],
 })
 export class StockModule {}
