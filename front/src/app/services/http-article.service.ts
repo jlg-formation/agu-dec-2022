@@ -49,12 +49,6 @@ export class HttpArticleService extends ArticleService {
     );
   }
 
-  override async add(newArticle: NewArticle): Promise<void> {
-    await lastValueFrom(
-      this.http.post<Article[]>(url, newArticle).pipe(delay(300))
-    );
-  }
-
   override async remove(selectedArticles: Set<Article>): Promise<void> {
     const ids = [...selectedArticles].map((a) => a.id);
     await lastValueFrom(

@@ -30,12 +30,6 @@ export class ArticleService {
     );
   }
 
-  async add(newArticle: NewArticle): Promise<void> {
-    const article = { ...newArticle, id: generateId() };
-    this.articles.push(article);
-    this.save();
-  }
-
   load(): Article[] {
     const str = localStorage.getItem('articles');
     if (str === null) {
