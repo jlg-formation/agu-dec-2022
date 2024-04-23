@@ -41,5 +41,7 @@ wss.on("connection", function connection(ws) {
     console.log("received: %s", data);
   });
 
-  ws.send(JSON.stringify({ toto: 123 }));
+  setInterval(() => {
+    ws.send(JSON.stringify({ toto: 123 }));
+  }, 1000);
 });
