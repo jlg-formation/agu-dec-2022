@@ -1,14 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Observable, of, tap } from 'rxjs';
 import { Article, NewArticle } from '../interfaces/article';
-import {
-  Observable,
-  catchError,
-  delay,
-  finalize,
-  of,
-  switchMap,
-  tap,
-} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
