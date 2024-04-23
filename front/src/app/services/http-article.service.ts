@@ -9,6 +9,7 @@ import {
   of,
   switchMap,
   tap,
+  throwError,
 } from 'rxjs';
 import { Article, NewArticle } from '../interfaces/article';
 import { ArticleService } from './article.service';
@@ -22,20 +23,7 @@ export class HttpArticleService extends ArticleService {
   constructor(private http: HttpClient) {
     super();
     console.log('instantiate http article service');
-    this.refresh();
-  }
-
-  override async refresh(): Promise<void> {
-    try {
-      const articles = await lastValueFrom(
-        this.http.get<Article[]>(url).pipe(delay(300))
-      );
-      console.log('articles: ', articles);
-      this.articles = articles;
-      this.save();
-    } catch (err) {
-      console.log('err: ', err);
-    }
+    this.refresh2().subscribe();
   }
 
   override refresh2(): Observable<void> {

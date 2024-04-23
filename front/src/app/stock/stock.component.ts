@@ -7,6 +7,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { Article } from '../interfaces/article';
 import { ArticleService } from '../services/article.service';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-stock',
@@ -47,7 +48,7 @@ export class StockComponent {
   async refresh() {
     try {
       this.isRefreshing = true;
-      await this.articleService.refresh();
+      await lastValueFrom(this.articleService.refresh2());
     } catch (err) {
       console.log('err: ', err);
     } finally {
@@ -59,7 +60,7 @@ export class StockComponent {
     try {
       this.isRemoving = true;
       await this.articleService.remove(this.selectedArticles);
-      await this.articleService.refresh();
+      await lastValueFrom(this.articleService.refresh2());
       this.selectedArticles.clear();
     } catch (err) {
       console.log('err: ', err);

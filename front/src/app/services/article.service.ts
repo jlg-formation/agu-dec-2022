@@ -44,10 +44,6 @@ export class ArticleService {
     return JSON.parse(str);
   }
 
-  async refresh(): Promise<void> {
-    this.articles = this.load();
-  }
-
   refresh2(): Observable<void> {
     return of(undefined).pipe(
       tap(() => {
