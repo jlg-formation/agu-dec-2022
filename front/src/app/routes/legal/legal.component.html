@@ -1,5 +1,15 @@
 <main>
   <h1>Mentions Légales</h1>
+  <div>
+    @for (n of array(); track n) {
+      <span>{{ n }}&nbsp;</span>
+    } @empty {
+      <span>Aucun element</span>
+    }
+  </div>
+  <button (click)="addRandom()">Ajoute random</button>
+  <div>Total : {{ total() }}</div>
+  <div>Max : {{ max() }}</div>
   <p>
     Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla suscipit
     assumenda provident quo sapiente, nesciunt quaerat eaque adipisci non fuga
