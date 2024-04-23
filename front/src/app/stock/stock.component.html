@@ -2,9 +2,14 @@
   <h1>Liste des articles</h1>
   <div class="content">
     <nav>
-      <app-async-btn label="Rafraîchir" [icon]="faRotateRight"> </app-async-btn>
+      <app-async-btn
+        label="Rafraîchir"
+        [icon]="faRotateRight"
+        [action]="refresh()"
+      >
+      </app-async-btn>
       <button
-        (click)="refresh()"
+        (click)="refresh().subscribe()"
         i18n-title
         title="Rafraîchir"
         [disabled]="isRefreshing"

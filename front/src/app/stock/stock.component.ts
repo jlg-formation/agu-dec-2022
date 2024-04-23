@@ -9,7 +9,15 @@ import {
   faRotateRight,
   faTrashCan,
 } from '@fortawesome/free-solid-svg-icons';
-import { EMPTY, catchError, finalize, of, switchMap, tap } from 'rxjs';
+import {
+  EMPTY,
+  Observable,
+  catchError,
+  finalize,
+  of,
+  switchMap,
+  tap,
+} from 'rxjs';
 import { Article } from '../interfaces/article';
 import { ArticleService } from '../services/article.service';
 
@@ -39,7 +47,7 @@ export class StockComponent {
   handleKeyboardEvent(event: KeyboardEvent) {
     console.log('event.key: ', event.key);
     if (event.key === 'r') {
-      this.refresh();
+      this.refresh().subscribe();
     }
   }
 
@@ -48,22 +56,20 @@ export class StockComponent {
     this.clearSelectedArticles();
   }
 
-  refresh(): void {
-    of(undefined)
-      .pipe(
-        switchMap(() => {
-          this.isRefreshing = true;
-          return this.articleService.refresh();
-        }),
-        catchError((err) => {
-          console.log('err: ', err);
-          return of(undefined);
-        }),
-        finalize(() => {
-          this.isRefreshing = false;
-        })
-      )
-      .subscribe();
+  refresh(): Observable<void> {
+    return of(undefined).pipe(
+      switchMap(() => {
+        this.isRefreshing = true;
+        return this.articleService.refresh();
+      }),
+      catchError((err) => {
+        console.log('err: ', err);
+        return of(undefined);
+      }),
+      finalize(() => {
+        this.isRefreshing = false;
+      })
+    );
   }
 
   remove() {
