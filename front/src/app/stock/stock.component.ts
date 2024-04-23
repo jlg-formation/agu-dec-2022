@@ -70,20 +70,7 @@ export class StockComponent {
       .subscribe();
   }
 
-  async remove() {
-    try {
-      this.isRemoving = true;
-      await this.articleService.remove(this.selectedArticles);
-      await lastValueFrom(this.articleService.refresh2());
-      this.selectedArticles.clear();
-    } catch (err) {
-      console.log('err: ', err);
-    } finally {
-      this.isRemoving = false;
-    }
-  }
-
-  remove2() {
+  remove() {
     return of(undefined)
       .pipe(
         switchMap(() => {
