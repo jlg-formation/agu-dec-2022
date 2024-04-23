@@ -23,10 +23,10 @@ export class HttpArticleService extends ArticleService {
   constructor(private http: HttpClient) {
     super();
     console.log('instantiate http article service');
-    this.refresh2().subscribe();
+    this.refresh().subscribe();
   }
 
-  override refresh2(): Observable<void> {
+  override refresh(): Observable<void> {
     return of(undefined).pipe(
       switchMap(() => this.http.get<Article[]>(url)),
       delay(300),
@@ -42,25 +42,14 @@ export class HttpArticleService extends ArticleService {
     );
   }
 
-  override add2(newArticle: NewArticle): Observable<void> {
+  override add(newArticle: NewArticle): Observable<void> {
     return of(undefined).pipe(
       switchMap(() => this.http.post<void>(url, newArticle)),
       delay(300)
     );
   }
 
-  override async remove(selectedArticles: Set<Article>): Promise<void> {
-    const ids = [...selectedArticles].map((a) => a.id);
-    await lastValueFrom(
-      this.http
-        .delete<Article[]>(url, {
-          body: ids,
-        })
-        .pipe(delay(300))
-    );
-  }
-
-  override remove2(selectedArticles: Set<Article>): Observable<void> {
+  override remove(selectedArticles: Set<Article>): Observable<void> {
     return of(undefined).pipe(
       switchMap(() => {
         const ids = [...selectedArticles].map((a) => a.id);

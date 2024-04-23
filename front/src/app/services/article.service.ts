@@ -20,7 +20,7 @@ export class ArticleService {
     console.log('instantiate article service');
   }
 
-  add2(newArticle: NewArticle): Observable<void> {
+  add(newArticle: NewArticle): Observable<void> {
     return of(undefined).pipe(
       tap(() => {
         const article = { ...newArticle, id: generateId() };
@@ -38,7 +38,7 @@ export class ArticleService {
     return JSON.parse(str);
   }
 
-  refresh2(): Observable<void> {
+  refresh(): Observable<void> {
     return of(undefined).pipe(
       tap(() => {
         this.articles = this.load();
@@ -46,12 +46,7 @@ export class ArticleService {
     );
   }
 
-  async remove(selectedArticles: Set<Article>) {
-    this.articles = this.articles.filter((a) => !selectedArticles.has(a));
-    this.save();
-  }
-
-  remove2(selectedArticles: Set<Article>): Observable<void> {
+  remove(selectedArticles: Set<Article>): Observable<void> {
     return of(undefined).pipe(
       tap(() => {
         this.articles = this.articles.filter((a) => !selectedArticles.has(a));

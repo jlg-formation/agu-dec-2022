@@ -5,16 +5,7 @@ import {
   faRotateRight,
   faTrashCan,
 } from '@fortawesome/free-solid-svg-icons';
-import {
-  EMPTY,
-  Observable,
-  catchError,
-  finalize,
-  lastValueFrom,
-  of,
-  switchMap,
-  tap,
-} from 'rxjs';
+import { EMPTY, catchError, finalize, of, switchMap, tap } from 'rxjs';
 import { Article } from '../interfaces/article';
 import { ArticleService } from '../services/article.service';
 
@@ -57,7 +48,7 @@ export class StockComponent {
       .pipe(
         switchMap(() => {
           this.isRefreshing = true;
-          return this.articleService.refresh2();
+          return this.articleService.refresh();
         }),
         catchError((err) => {
           console.log('err: ', err);
@@ -81,9 +72,9 @@ export class StockComponent {
             return EMPTY;
           }
           this.isRemoving = true;
-          return this.articleService.remove2(this.selectedArticles);
+          return this.articleService.remove(this.selectedArticles);
         }),
-        switchMap(() => this.articleService.refresh2()),
+        switchMap(() => this.articleService.refresh()),
         tap(() => {
           this.selectedArticles.clear();
         }),
