@@ -10,7 +10,19 @@
         [selectAll]="true"
         (empty)="doSomething($event)"
       />
-      <span class="error"></span>
+      <span class="error">
+        @if (f.controls["name"].touched) {
+          @if (f.controls["name"].errors?.["required"]) {
+            Champs requis
+          }
+          @if (f.controls["name"].errors?.["minlength"]) {
+            Champs trop court ({{
+              f.controls["name"].errors?.["minlength"].actualLength
+            }}
+            < {{ f.controls["name"].errors?.["minlength"].requiredLength }})
+          }
+        }
+      </span>
     </label>
     <label>
       <span>Prix</span>
@@ -33,5 +45,5 @@
       <span>Ajouter</span>
     </button>
   </form>
-  {{ f.value | json }}
+  {{ f.controls["name"].errors | json }}
 </main>
