@@ -57,6 +57,16 @@ export class AddComponent {
     this.route = inject(ActivatedRoute);
   }
 
+  errorPriceMsg() {
+    console.log('errorPriceMsg');
+    if (this.f.controls['price'].touched) {
+      if (this.f.controls['price'].errors?.['required']) {
+        return 'Champs requis';
+      }
+    }
+    return '';
+  }
+
   doSomething(event: unknown) {
     console.log('event: ', event);
   }
