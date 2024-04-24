@@ -31,11 +31,8 @@ import { blackListValidator } from '../../validators/black-list.validator';
 export class AddComponent {
   errorMsg = '';
   name = new FormControl('Truc', {
-    validators: [
-      Validators.required,
-      Validators.minLength(3),
-      blackListValidator,
-    ],
+    validators: [Validators.required, Validators.minLength(3)],
+    asyncValidators: [blackListValidator(this.articleService)],
     nonNullable: true,
   });
   f = new FormGroup({
