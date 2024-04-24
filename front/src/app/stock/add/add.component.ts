@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -20,6 +20,7 @@ import {
   switchMap,
   tap,
 } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-add',
@@ -58,7 +59,6 @@ export class AddComponent {
   }
 
   errorPriceMsg() {
-    console.log('errorPriceMsg');
     if (this.f.controls['price'].touched) {
       if (this.f.controls['price'].errors?.['required']) {
         return 'Champs requis';
