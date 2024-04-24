@@ -4,6 +4,7 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
+  NonNullableFormBuilder,
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -27,7 +28,7 @@ import {
 })
 export class AddComponent {
   errorMsg = '';
-  f = this.fb.nonNullable.group({
+  f = this.fb.group({
     name: ['Truc', [Validators.required, Validators.minLength(3)]],
     price: [0, Validators.required],
     qty: [1, Validators.required],
@@ -41,7 +42,7 @@ export class AddComponent {
   constructor(
     private articleService: ArticleService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: NonNullableFormBuilder
   ) {
     this.route = inject(ActivatedRoute);
   }
