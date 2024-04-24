@@ -6,7 +6,7 @@ import { StockComponent } from './stock.component';
 
 const routes: Routes = [
   { path: '', component: StockComponent },
-  { path: 'add', component: AddComponent, canActivate: [tooManyArticlesGuard] },
+  { path: 'add', component: AddComponent, canActivate: [] },
 ];
 
 @NgModule({
