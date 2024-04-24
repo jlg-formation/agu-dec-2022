@@ -21,6 +21,7 @@ import {
   tap,
 } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { blackListValidator } from '../../validators/black-list.validator';
 
 @Component({
   selector: 'app-add',
@@ -30,7 +31,11 @@ import { toSignal } from '@angular/core/rxjs-interop';
 export class AddComponent {
   errorMsg = '';
   name = new FormControl('Truc', {
-    validators: [Validators.required, Validators.minLength(3)],
+    validators: [
+      Validators.required,
+      Validators.minLength(3),
+      blackListValidator,
+    ],
     nonNullable: true,
   });
   f = new FormGroup({

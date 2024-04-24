@@ -19,6 +19,9 @@
             Champs trop court ({{ name.errors?.["minlength"].actualLength }} <
             {{ name.errors?.["minlength"].requiredLength }})
           }
+          @if (name.errors?.["blackList"]) {
+            Mot blacklisté
+          }
         }
       </span>
     </label>
