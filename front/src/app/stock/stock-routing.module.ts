@@ -13,7 +13,7 @@ const routes: Routes = [
   {
     path: 'add',
     component: AddComponent,
-    canActivate: [],
+    canActivate: [tooManyArticlesGuard],
     title: 'Gestion Stock - Ajouter un article',
   },
 ];

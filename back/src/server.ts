@@ -10,7 +10,7 @@ const app = express();
 const server = createServer(app);
 
 const port = +(process.env.PORT || 3000);
-const wwwDir: string = "../front/dist/front";
+const wwwDir: string = "../front/dist/front/browser";
 
 app.use((req, res, next) => {
   console.log("req: ", req.url);
