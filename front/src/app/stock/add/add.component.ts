@@ -56,6 +56,9 @@ export class AddComponent {
       .pipe(
         tap(() => {
           console.log('submit');
+          if (this.f.invalid) {
+            throw new Error('formulaire invalide');
+          }
           this.errorMsg = '';
           this.isAdding = true;
         }),
@@ -71,6 +74,8 @@ export class AddComponent {
           console.log('err: ', err);
           if (err instanceof HttpErrorResponse) {
             this.errorMsg = err.error;
+          } else if (err instanceof Error) {
+            this.errorMsg = err.message;
           }
           return of(undefined);
         }),

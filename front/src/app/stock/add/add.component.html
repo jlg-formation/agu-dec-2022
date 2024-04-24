@@ -20,12 +20,9 @@
       <input type="number" step="1" formControlName="qty" />
     </label>
     <div class="error">
-      <span>
-        <span *ngIf="errorMsg">Error: </span>
-        <span>{{ errorMsg }}</span>
-      </span>
+      {{ errorMsg }}
     </div>
-    <button class="primary" type="submit" [disabled]="isAdding || f.invalid">
+    <button class="primary" type="submit" [disabled]="isAdding">
       <fa-icon
         [icon]="isAdding ? faCircleNotch : faPlus"
         [spin]="isAdding"
