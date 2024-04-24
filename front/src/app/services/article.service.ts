@@ -55,5 +55,5 @@ export class ArticleService {
   }
 }
 function generateId() {
-  return Date.now() + '_' + Math.floor(Math.random() * 1e9);
+  return window.crypto.randomUUID();
 }
