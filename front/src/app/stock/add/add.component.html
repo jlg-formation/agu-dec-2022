@@ -10,14 +10,17 @@
         [selectAll]="true"
         (empty)="doSomething($event)"
       />
+      <span class="error"></span>
     </label>
     <label>
       <span>Prix</span>
       <input type="number" step="0.01" formControlName="price" />
+      <span class="error"></span>
     </label>
     <label>
       <span>Quantité</span>
       <input type="number" step="1" formControlName="qty" />
+      <span class="error"></span>
     </label>
     <div class="error">
       {{ errorMsg }}
