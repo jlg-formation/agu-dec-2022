@@ -3,6 +3,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { array, max, total } from '../../signaux';
 import { webSocket } from 'rxjs/webSocket';
 import { tap } from 'rxjs';
+import { WdgComponent } from '@monentreprise/wdg';
 
 const url = `ws://${window.location.host}/truc`;
 console.log('url: ', url);
@@ -10,7 +11,7 @@ console.log('url: ', url);
 @Component({
   selector: 'app-legal',
   standalone: true,
-  imports: [],
+  imports: [WdgComponent],
   templateUrl: './legal.component.html',
   styleUrls: ['./legal.component.scss'],
 })
@@ -22,14 +23,13 @@ export class LegalComponent {
   webSocket = webSocket(url);
   constructor() {
     console.log('this.array: ', this.array);
-    this.webSocket
-      .pipe(
-        takeUntilDestroyed(),
-        tap((data) => {
-          console.log('data: ', data);
-        })
-      )
-      .subscribe();
+    this.webSocket.pipe(
+      takeUntilDestroyed(),
+      tap((data) => {
+        console.log('data: ', data);
+      })
+    );
+    // .subscribe();
   }
 
   addRandom() {

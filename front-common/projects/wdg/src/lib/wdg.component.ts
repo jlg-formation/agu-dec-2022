@@ -4,13 +4,7 @@ import { Component } from '@angular/core';
   selector: 'lib-wdg',
   standalone: true,
   imports: [],
-  template: `
-    <p>
-      wdg works!
-    </p>
-  `,
-  styles: ``
+  template: ` <p>qqq sss mon joli composant</p> `,
+  styles: ``,
 })
-export class WdgComponent {
-
-}
+export class WdgComponent {}

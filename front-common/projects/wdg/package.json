@@ -1,6 +1,6 @@
 {
-  "name": "wdg",
-  "version": "0.0.1",
+  "name": "@monentreprise/wdg",
+  "version": "0.17.1",
   "peerDependencies": {
     "@angular/common": "^17.3.0",
     "@angular/core": "^17.3.0"
