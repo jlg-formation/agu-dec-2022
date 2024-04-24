@@ -30,6 +30,10 @@ app.post("/articles", (req, res) => {
     res.status(400).end("Please do not put price to 1");
     return;
   }
+  if (articles.length > 5) {
+    res.status(400).end();
+    return;
+  }
   const id = generateId();
   const article: Article = { id, ...newArticle };
   articles.push(article);
