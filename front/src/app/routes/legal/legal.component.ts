@@ -14,7 +14,7 @@ console.log('url: ', url);
   templateUrl: './legal.component.html',
   styleUrls: ['./legal.component.scss'],
 })
-export class LegalComponent implements OnInit {
+export class LegalComponent {
   array = array;
   max = max;
   total = total;
@@ -31,8 +31,6 @@ export class LegalComponent implements OnInit {
       )
       .subscribe();
   }
-
-  ngOnInit(): void {}
 
   addRandom() {
     const array = this.array();

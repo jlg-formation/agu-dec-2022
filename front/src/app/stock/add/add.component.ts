@@ -1,6 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, inject } from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faCircleNotch, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { NewArticle } from '../../interfaces/article';
@@ -22,23 +27,24 @@ import {
 })
 export class AddComponent {
   errorMsg = '';
-  f = new FormGroup({
-    name: new FormControl('Truc', [
-      Validators.required,
-      Validators.minLength(3),
-    ]),
-    price: new FormControl(0, Validators.required),
-    qty: new FormControl(1, Validators.required),
+  f = this.fb.nonNullable.group({
+    name: ['Truc', [Validators.required, Validators.minLength(3)]],
+    price: [0, Validators.required],
+    qty: [1, Validators.required],
   });
   faCircleNotch = faCircleNotch;
   faPlus = faPlus;
   isAdding = false;
 
+  route: ActivatedRoute;
+
   constructor(
     private articleService: ArticleService,
     private router: Router,
-    private route: ActivatedRoute
-  ) {}
+    private fb: FormBuilder
+  ) {
+    this.route = inject(ActivatedRoute);
+  }
 
   doSomething(event: unknown) {
     console.log('event: ', event);
@@ -53,13 +59,13 @@ export class AddComponent {
           this.isAdding = true;
         }),
         switchMap(() => {
-          const newArticle = this.f.value as NewArticle;
+          const newArticle: NewArticle = this.f.getRawValue();
           return this.articleService.add(newArticle);
         }),
         switchMap(() => this.articleService.refresh()),
-        switchMap(() =>
-          this.router.navigate(['..'], { relativeTo: this.route })
-        ),
+        switchMap(() => {
+          return this.router.navigate(['..'], { relativeTo: this.route });
+        }),
         catchError((err) => {
           console.log('err: ', err);
           if (err instanceof HttpErrorResponse) {
