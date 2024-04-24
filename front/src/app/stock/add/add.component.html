@@ -11,15 +11,13 @@
         (empty)="doSomething($event)"
       />
       <span class="error">
-        @if (f.controls["name"].touched) {
-          @if (f.controls["name"].errors?.["required"]) {
+        @if (name.touched) {
+          @if (name.errors?.["required"]) {
             Champs requis
           }
-          @if (f.controls["name"].errors?.["minlength"]) {
-            Champs trop court ({{
-              f.controls["name"].errors?.["minlength"].actualLength
-            }}
-            < {{ f.controls["name"].errors?.["minlength"].requiredLength }})
+          @if (name.errors?.["minlength"]) {
+            Champs trop court ({{ name.errors?.["minlength"].actualLength }} <
+            {{ name.errors?.["minlength"].requiredLength }})
           }
         }
       </span>
@@ -27,7 +25,7 @@
     <label>
       <span>Prix</span>
       <input type="number" step="0.01" formControlName="price" />
-      <span class="error"></span>
+      <span class="error"> </span>
     </label>
     <label>
       <span>Quantité</span>

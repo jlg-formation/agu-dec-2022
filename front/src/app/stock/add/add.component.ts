@@ -28,10 +28,20 @@ import {
 })
 export class AddComponent {
   errorMsg = '';
-  f = this.fb.group({
-    name: ['Truc', [Validators.required, Validators.minLength(3)]],
-    price: [0, Validators.required],
-    qty: [1, Validators.required],
+  name = new FormControl('Truc', {
+    validators: [Validators.required, Validators.minLength(3)],
+    nonNullable: true,
+  });
+  f = new FormGroup({
+    name: this.name,
+    price: new FormControl(0, {
+      validators: Validators.required,
+      nonNullable: true,
+    }),
+    qty: new FormControl(1, {
+      validators: Validators.required,
+      nonNullable: true,
+    }),
   });
   faCircleNotch = faCircleNotch;
   faPlus = faPlus;
